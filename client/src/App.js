@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import AddContact from './components/AddContact';
 import ContactCard from './components/ContactCard';
-import { getContacts } from './JS/actions/actionContact'
+import { getContacts, toggleFalse } from './JS/actions/actionContact'
 
 function App() {
   const dispatch = useDispatch()
@@ -26,11 +26,11 @@ function App() {
         <Button variant="outline-primary button">Contact List</Button>
       </Link>
       <Link to="/Add_Contact">
-        <Button variant="primary button">Add Contact</Button>
+        <Button variant="primary button" onClick={()=>dispatch(toggleFalse())}>Add Contact</Button>
       </Link>
 
       <Switch>
-        <Route path="/Add_Contact" component={AddContact} />
+        <Route path="/(Add_Contact|Edit_Contact)/" component={AddContact} />
         <Route path="/Contact_List" render={() => (<div className="contact-list">
           {contacts && contacts.map((el, i) => (<ContactCard contact={el} key={i} />))}
                                                 </div>)} />

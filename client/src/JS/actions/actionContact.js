@@ -1,5 +1,5 @@
 import axios from "axios"
-import { GET_CONTACTS } from "../constants/actionTypes"
+import { GET_CONTACTS, GET_CONTACT, TOGGLE_TRUE, TOGGLE_FALSE } from "../constants/actionTypes"
 
 
 export const getContacts = () => (dispatch) => {
@@ -7,4 +7,42 @@ export const getContacts = () => (dispatch) => {
         .get("/api/contacts")
         .then((res) => dispatch({ type: GET_CONTACTS, payload: res.data }))
         .catch((err) => console.log((err)))
+}
+
+export const getContact = (id) => (dispatch) => {
+    axios
+        .get(`/api/contacts/${id}`)
+        .then((res) => dispatch({ type: GET_CONTACT, payload: res.data }))
+        .catch((err) => console.log((err)))
+}
+
+export const addContact = (newContact) => (dispatch) => {
+    axios
+        .post('/api/contacts', newContact)
+        .then(() => dispatch(getContacts()))
+        .catch((err) => console.log((err)))
+}
+export const deleteContact = (id) => (dispatch) => {
+    axios
+        .delete(`/api/contacts/${id}`)
+        .then(() => dispatch(getContacts()))
+        .catch((err) => console.log((err)))
+}
+
+export const editContact = (id, editContact) => (dispatch) => {
+    axios
+        .put(`/api/contacts/${id}`, editContact)
+        .then(() => dispatch(getContacts()))
+        .catch((err) => console.log((err)))
+}
+
+export const toggleTrue = () => {
+    return {
+        type: TOGGLE_TRUE
+    }
+}
+export const toggleFalse = () => {
+    return {
+        type: TOGGLE_FALSE
+    }
 }

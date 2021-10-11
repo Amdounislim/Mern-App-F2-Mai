@@ -1,9 +1,16 @@
 import React from 'react'
-import {Card, Col, Image, Button} from "react-bootstrap"
+import { Card, Col, Image, Button } from "react-bootstrap"
+import { useDispatch } from "react-redux"
+import { deleteContact, getContact, toggleTrue } from '../JS/actions/actionContact'
+import { Link } from "react-router-dom"
 
-const ContactCard = ({contact}) => {
-    return (
-        <div
+const ContactCard = ({ contact }) => {
+
+
+  const dispatch = useDispatch()
+
+  return (
+    <div
       style={{
         textAlign: "center",
         display: "flex",
@@ -58,13 +65,17 @@ const ContactCard = ({contact}) => {
           </Card.Text>
         </Card.Body>
         <div className="buttons">
-          <Button variant="outline-primary edit-button">Edit</Button>
-
-          <Button variant="outline-danger edit-button">Delete</Button>
+          <Link to='/Edit_Contact'>
+            <Button variant="outline-primary edit-button" onClick={() => {dispatch(getContact(contact._id));
+                                                                          dispatch(toggleTrue())}}>
+                                                                            Edit
+                                                                            </Button>
+          </Link>
+          <Button variant="outline-danger edit-button" onClick={() => dispatch(deleteContact(contact._id))}>Delete</Button>
         </div>
       </Card>
     </div>
-    )
+  )
 }
 
 export default ContactCard
